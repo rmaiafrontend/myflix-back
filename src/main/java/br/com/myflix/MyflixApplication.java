@@ -51,6 +51,79 @@ public class MyflixApplication implements CommandLineRunner {
 
             }
 
+            if(opcao == 3) {
+                System.out.println("Digite o nome do filme que você deseja editar:");
+                String nomeFilme = teclado.nextLine();
+
+                boolean filmeEncontrado = false;
+                for (Filme f : filmeRepository.findAll()) {
+                    if (f.getNome().equals(nomeFilme)){
+                        filmeEncontrado = true;
+                        System.out.println("Digite a opção desejada:");
+                        System.out.println("1. Editar nome do filme");
+                        System.out.println("2. Editar avaliação do filme");
+                        System.out.println("3. Editar comentário do filme");
+                        int select = Integer.parseInt(teclado.nextLine());
+
+                        if(select == 1){
+                            System.out.println("Digite o novo nome do filme:");
+                            String novoNome = teclado.nextLine();
+                            f.setNome(novoNome);
+                            filmeRepository.save(f);
+                            System.out.println("Nome do filme atualizado com sucesso!");
+                            break;
+                        }
+                        if(select == 2) {
+                            System.out.println("Digite a nova avaliação do filme:");
+                            int novaAvaliacao = Integer.parseInt(teclado.nextLine());
+                            f.setAvaliacao(novaAvaliacao);
+                            filmeRepository.save(f);
+                            System.out.println("Avaliação do filme atualizada com sucesso!");
+                            break;
+                        }
+                        if(select == 3) {
+                            System.out.println("Digite o novo comentário do filme:");
+                            String novoComentario = teclado.nextLine();
+                            f.setComentario(novoComentario);
+                            filmeRepository.save(f);
+                            System.out.println("Comentário do filme atualizado com sucesso!");
+                            break;
+                        }
+                        else {
+                            System.out.println("Opção inválida");
+                            break;
+                        }
+
+                    }
+                }
+
+                if (!filmeEncontrado) {
+                    System.out.println("Filme não encontrado.");
+                }
+            }
+
+            if(opcao == 4) {
+                System.out.println("Digite o nome do filme a ser excluído:");
+                String nomeFilme = teclado.nextLine();
+
+                boolean filmeEncontrado = false;
+                for (Filme f : filmeRepository.findAll()) {
+                    if (f.getNome().equalsIgnoreCase(nomeFilme)) {
+                        var id = f.getId();
+                        filmeRepository.deleteById(id);
+                        System.out.println("Filme excluído com sucesso!");
+                        filmeEncontrado = true;
+                        break;
+                    }
+                }
+
+                if (!filmeEncontrado) {
+                    System.out.println("Filme não encontrado.");
+                }
+
+
+            }
+
 
             if(opcao == 5){
                 break;
